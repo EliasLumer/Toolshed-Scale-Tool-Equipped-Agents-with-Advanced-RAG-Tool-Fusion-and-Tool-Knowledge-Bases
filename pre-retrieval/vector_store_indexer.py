@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 from typing import List
 from langchain.schema.document import Document
 import os
-from typing import List
-from langchain.schema import Document
 from langchain.vectorstores import FAISS
 
 class BaseVectorStoreIndexer(ABC):
