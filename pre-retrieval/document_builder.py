@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, List, Optional
 from langchain.schema.document import Document
 import re
 from typing import Dict, Any, List, Optional
