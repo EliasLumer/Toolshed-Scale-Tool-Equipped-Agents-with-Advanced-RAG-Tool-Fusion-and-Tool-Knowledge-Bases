@@ -4,7 +4,7 @@ from intra_retrieval.base_artf_module import BaseARTFModules
 from pydantic import BaseModel, Field
 
 class QueryDecompositionModule(BaseARTFModules):
-    def __init__(self, llm: ChatOpenAI):
+    def __init__(self, llm: AzureChatOpenAI):
         super().__init__(llm=llm)
 
     def _initialize_structured_llm(self):
@@ -14,9 +14,9 @@ class QueryDecompositionModule(BaseARTFModules):
 
     def _get_system_message(self) -> str:
         return """You are an expert at breaking down user questions into clearly defined step(s).
-You will be given a user question that can be answered by a single action or multiple actions.
-For some questions, the user may be asking for a single action, which can be broken down into one step.
-For other questions, the user may be asking for multiple things, which can be broken down into multiple steps.
+You will be given a user question that can be answered by a single action or multiple actions (multi-hop queries).
+For some questions, the user may be asking for a single action, which is typically just a single topic and query, which can be broken down into one step.
+For other questions, the user may be asking for multiple things (usually denoted by the use of 'and' or 'additionally'), which can be broken down into multiple steps.
 Your job is to:
 1. Break down the question into clearly defined steps.
 2. Always be as clear as possible, including the technical details.
@@ -25,9 +25,9 @@ Your job is to:
 Example of single-step questions:
 -----------
 EX. QUESTION:
-What's the weather forecast for tomorrow in New York City?
+What is the NPV of my project?
 EX. STEP(S):
-['What's the weather forecast for tomorrow in New York City?']
+['What is the NPV of my project?']
 -----------
 
 Example of multi-step questions (2+ steps):
