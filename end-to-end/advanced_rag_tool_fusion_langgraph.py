@@ -59,11 +59,9 @@ def process_decomposed_query_subgraph():
 
     def expand_query(state: DecomposedQueryState):
         expanded_queries = multi_query_expansion_variation_module.generate(query=state["decomposed_query"])
-        print(expanded_queries)
         return {"expanded_queries": expanded_queries}
 
     def continue_to_retrieve_tools_for_each_expanded_queries(state: DecomposedQueryState):
-        print('gets to this state???')
         return [Send("retrieve_tools_for_each_expanded_query", {"expanded_query": eq}) for eq in state["expanded_queries"]]
     
     def retrieve_tools_for_query(state: DecomposedQueryState):
@@ -72,11 +70,9 @@ def process_decomposed_query_subgraph():
 
     def retrieve_tools_for_expanded_query(state: ExpandedQueryState):
         retrieved_tools = initial_tool_retrieval_module.generate(query=state["expanded_query"], top_k=individual_top_k)
-        print('retrieves tools')
         return {"expanded_query_dicts": [{"expanded_query": state["expanded_query"], "retrieved_tools": retrieved_tools}]}
     
     def rerank_expanded_queries(state: DecomposedQueryState):
-        print('rerank expanded queries')
         expanded_query_dicts = state["expanded_query_dicts"]
         expanded_queries_list = [eq["expanded_query"] for eq in expanded_query_dicts]
         expanded_queries_tools_list = [eq["retrieved_tools"] for eq in expanded_query_dicts]
