@@ -1,0 +1,7 @@
+langchain==0.3.4
+langchain-community==0.3.3
+langgraph==0.2.39
+langchain-openai==0.2.3
+langchain-postgres==0.0.12
+numpy
+scipy
